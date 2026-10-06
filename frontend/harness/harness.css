@@ -1,0 +1,151 @@
+/* Harness chrome + fallback --ui-* theme vars (harness only — the real
+   plugin never defines these; inside Hermes Desktop they already exist). */
+:root {
+  --ui-text-primary: #1b1b1d;
+  --ui-text-secondary: #4a4a4f;
+  --ui-text-tertiary: #74747a;
+  --ui-text-quaternary: #9a9aa0;
+  --ui-bg-primary: #f6f6f7;
+  --ui-bg-secondary: #ececee;
+  --ui-bg-tertiary: #e2e2e5;
+  --ui-bg-quaternary: #d8d8dc;
+  --ui-bg-elevated: #ffffff;
+  --ui-bg-editor: #f6f6f7;
+  --ui-bg-input: #ffffff;
+  --ui-stroke-primary: #d3d3d7;
+  --ui-stroke-secondary: #dcdce0;
+  --ui-stroke-tertiary: #e6e6ea;
+  --ui-accent: #4f7cff;
+  --ui-danger: #d9463f;
+  --ui-success: #2fa360;
+  --ui-orange: #d98a3d;
+  --ui-chat-bubble-background: #ffffff;
+  color-scheme: light;
+}
+html.dark {
+  --ui-text-primary: #f1f1f3;
+  --ui-text-secondary: #c7c7cc;
+  --ui-text-tertiary: #98989f;
+  --ui-text-quaternary: #77777e;
+  --ui-bg-primary: #0d0d0e;
+  --ui-bg-secondary: #17171a;
+  --ui-bg-tertiary: #1f1f23;
+  --ui-bg-quaternary: #28282d;
+  --ui-bg-elevated: #1a1a1d;
+  --ui-bg-editor: #0d0d0e;
+  --ui-bg-input: #17171a;
+  --ui-stroke-primary: #2c2c31;
+  --ui-stroke-secondary: #2a2a2f;
+  --ui-stroke-tertiary: #232327;
+  --ui-accent: #7c9bff;
+  --ui-danger: #ef6a63;
+  --ui-success: #4bc57f;
+  --ui-orange: #e0a05c;
+  --ui-chat-bubble-background: #202024;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--ui-bg-editor);
+  color: var(--ui-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
+}
+#root { height: 100vh; display: flex; flex-direction: column; }
+.hx-page-shell { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+
+/* ---- fake SDK primitives ---- */
+.hx-btn {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.hx-btn-default { background: var(--ui-accent); color: white; }
+.hx-btn-outline { background: transparent; color: var(--ui-text-primary); border-color: var(--ui-stroke-secondary); }
+.hx-btn-ghost { background: transparent; color: var(--ui-text-secondary); }
+.hx-btn-destructive { background: var(--ui-danger); color: white; }
+.hx-btn-sm { padding: 0.2rem 0.5rem; font-size: 0.72rem; }
+.hx-btn:disabled { opacity: 0.5; cursor: default; }
+
+.hx-input {
+  font: inherit;
+  padding: 0.35rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--ui-stroke-secondary);
+  background: var(--ui-bg-input);
+  color: var(--ui-text-primary);
+}
+
+.hx-segmented { display: inline-flex; gap: 2px; background: var(--ui-bg-tertiary); border-radius: 6px; padding: 2px; }
+.hx-segmented-item { border: none; background: transparent; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.76rem; cursor: pointer; color: var(--ui-text-secondary); }
+.hx-segmented-item[data-active="true"] { background: var(--ui-bg-elevated); color: var(--ui-text-primary); font-weight: 600; }
+
+/* A Select is ONE control: .hx-select positions the visible trigger box and
+   an invisible, fully-overlaid native <select> on top of it so clicking
+   anywhere opens the real native dropdown (keyboard/native operable), while
+   the only text shown is the trigger's resolved label — never the raw
+   value/id (see fake-sdk.jsx SelectValue). */
+.hx-select { position: relative; display: inline-flex; min-width: 0; max-width: 100%; }
+.hx-select-trigger {
+  display: inline-flex; align-items: center; width: 100%; min-width: 10rem; max-width: 100%;
+  font: inherit; padding: 0.35rem 0.5rem; border-radius: 5px;
+  border: 1px solid var(--ui-stroke-secondary); background: var(--ui-bg-input); color: var(--ui-text-primary);
+}
+.hx-select-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hx-select-native { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+
+.hx-badge { display: inline-flex; align-items: center; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.68rem; font-weight: 600; }
+.hx-badge-default { background: color-mix(in srgb, var(--ui-accent) 15%, transparent); color: var(--ui-accent); }
+.hx-badge-destructive { background: color-mix(in srgb, var(--ui-danger) 15%, transparent); color: var(--ui-danger); }
+
+.hx-kbd { font-size: 0.65rem; padding: 0.05rem 0.3rem; border-radius: 3px; border: 1px solid var(--ui-stroke-secondary); background: var(--ui-bg-secondary); }
+.hx-kbd-group { display: inline-flex; gap: 2px; }
+
+.hx-scroll { overflow: auto; }
+
+.hx-status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+.hx-status-good { background: var(--ui-success); }
+.hx-status-warn { background: var(--ui-orange); }
+.hx-status-muted { background: var(--ui-text-quaternary); }
+.hx-status-bad { background: var(--ui-danger); }
+
+.hx-tip-wrap { position: relative; display: inline-flex; }
+.hx-tip-bubble {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: var(--ui-bg-elevated); color: var(--ui-text-primary); border: 1px solid var(--ui-stroke-secondary);
+  padding: 0.4rem 0.55rem; border-radius: 6px; font-size: 0.7rem; white-space: nowrap; z-index: 20; box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+
+.hx-empty, .hx-error { display: grid; place-items: center; text-align: center; padding: 2rem; gap: 0.4rem; }
+.hx-empty-title { font-weight: 650; font-size: 0.95rem; }
+.hx-empty-desc { color: var(--ui-text-tertiary); font-size: 0.8rem; max-width: 28rem; }
+.hx-error-actions { margin-top: 0.5rem; }
+
+.hx-dialog-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 50; }
+.hx-dialog { background: var(--ui-bg-elevated); border-radius: 10px; padding: 1rem; width: min(360px, 90vw); border: 1px solid var(--ui-stroke-secondary); }
+.hx-dialog-title { font-weight: 650; margin-bottom: 0.3rem; }
+.hx-dialog-desc { font-size: 0.8rem; color: var(--ui-text-tertiary); margin-bottom: 0.75rem; }
+.hx-dialog-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+
+/* codicon fallback glyphs (harness only; the real app ships the font) */
+.codicon { font-family: inherit; font-style: normal; }
+.codicon-game::before { content: '♠'; }
+.codicon-chevron-down::before { content: '▾'; }
+.codicon-chevron-up::before { content: '▴'; }
+
+/* harness control bar */
+.hx-controlbar {
+  display: flex; gap: 0.5rem; align-items: center; padding: 0.4rem 0.6rem;
+  background: var(--ui-bg-secondary); border-bottom: 1px solid var(--ui-stroke-secondary);
+  font-size: 0.75rem; flex-wrap: wrap;
+}
+.hx-controlbar select, .hx-controlbar button { font: inherit; }

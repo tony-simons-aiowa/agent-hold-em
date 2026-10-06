@@ -1,0 +1,9 @@
+{
+  "name": "agent-hold-em",
+  "label": "Agent Hold 'Em",
+  "description": "No-Limit Texas Hold 'Em: one human vs three real Hermes agents, right inside Hermes Desktop.",
+  "icon": "game",
+  "version": "1.0.0",
+  "api": "plugin_api.py",
+  "tab": { "hidden": true }
+}
